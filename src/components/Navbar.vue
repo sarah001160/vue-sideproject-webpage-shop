@@ -2,10 +2,10 @@
   <div class="navbar bg-primary">
            <ul>
             <li>產品列表</li>
-            <li>購物車</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
          </ul>
   </div>
 </template>

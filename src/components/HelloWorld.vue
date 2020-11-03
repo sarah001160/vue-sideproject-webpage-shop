@@ -8,6 +8,7 @@
 </template>
 
 <script>
+/*$ global */
 import Navbar from '@/components/Navbar'
 
 export default {

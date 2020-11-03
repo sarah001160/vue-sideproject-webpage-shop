@@ -1,6 +1,6 @@
 <template>
     <div class="products">
-        <h2>Products testing</h2>
+        <h2>Products內容</h2>
         <div>
             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @click="openModal(true)">建立新產品</button>
         </div>
@@ -21,9 +21,9 @@
                 <td>{{item.title}}</td>
                 <td class="text-right">{{item.origin_price}}</td>   
                 <td>{{item.price}}</td>
-                <td>暫時空白</td>
+                <td>暫時空白</td> 
                 <td>
-                  <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
+                  <button class="btn btn-outline-primary btn-sm" data-toggle="modal"  @click="openModal(false, item)">編輯</button>
                 </td>
 
             </tr>
@@ -34,7 +34,7 @@
 <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content border-0">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">新增產品</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -100,7 +100,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">確認</button>
+            <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default {
     },
     openModal(isNew,item){
       if(isNew){
-        this.tempProducts={};
+        this.tempProducts = {};
         this.isNew = true;
       }else{
         this.tempProducts = Object.assign({}, item);
@@ -159,10 +159,10 @@ export default {
     this.$http[httpMethod](api,{data:vm.tempProducts}).then((response)=>{
       console.log(response.data)
       if (response.data.success) {
-          $('#productModal').modal('hide');
+          $('#exampleModal').modal('hide');
           vm.getProducts();
         } else {
-          $('#productModal').modal('hide');
+          $('#exampleModal').modal('hide');
           vm.getProducts();
           console.log('新增失敗');
         }
