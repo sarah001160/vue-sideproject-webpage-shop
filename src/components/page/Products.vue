@@ -100,7 +100,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
+            <button type="button" class="btn btn-primary" @click="updateProduct()">確認</button>
           </div>
         </div>
       </div>
@@ -110,6 +110,7 @@
 </template>   
 
 <script>
+import $ from 'jquery'//
 export default {
   data () {
     return {
@@ -147,18 +148,17 @@ export default {
       }
       $('#exampleModal').modal('show');
     },
-  },
-  updateProduct(){
-    let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
-    let httpMethod = 'post';
-    const vm =this;
-    if(!vm.isNew){//flase非新建立資料(已存在資料),就用put更新
-      api= `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProducts.id}`
-      httpMethod = 'put'
-    }
-    this.$http[httpMethod](api,{data:vm.tempProducts}).then((response)=>{
-      console.log(response.data)
-      if (response.data.success) {
+    updateProduct(){
+      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
+      let httpMethod = 'post';
+      const vm =this;
+      if(!vm.isNew){//flase非新建立資料(已存在資料),就用put更新
+          api= `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProducts.id}`
+          httpMethod = 'put';
+       }
+      this.$http[httpMethod](api,{data:vm.tempProducts}).then((response)=>{
+        console.log(response.data)
+        if (response.data.success) {
           $('#exampleModal').modal('hide');
           vm.getProducts();
         } else {
@@ -166,7 +166,8 @@ export default {
           vm.getProducts();
           console.log('新增失敗');
         }
-    })
+      })
+    },
   },
   created(){
     this.getProducts();
