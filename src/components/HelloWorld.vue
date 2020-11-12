@@ -35,7 +35,7 @@ export default {
       })
     },
     getProducts(){
-      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`
+      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products/all`
       const vm = this;
       this.$http.get(api).then((response)=>{
         console.log(response.data)
@@ -47,7 +47,10 @@ export default {
   created(){
     this.getProducts();
     console.log(this.tempProducts)
-  },
+    const myCookie =document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    console.log('myCookie', myCookie)
+    this.$http.defaults.headers.common.Authorization = myCookie;
+ },
 }
 </script>
 

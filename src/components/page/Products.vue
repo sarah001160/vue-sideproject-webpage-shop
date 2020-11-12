@@ -131,7 +131,7 @@ export default {
       })
     },
     getProducts(){
-      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`
+      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}admin/products/all`
       const vm = this;
       this.$http.get(api).then((response)=>{
         console.log(response.data)
