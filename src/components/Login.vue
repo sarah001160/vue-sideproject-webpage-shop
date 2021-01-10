@@ -26,8 +26,9 @@
                     console.log(response.data)
                     if(response.data.success){//如果登入成功
                         const token = response.data.token;
-                        const expired = resopnse.data.expired;
+                        const expired = response.data.expired;
                         console.log(token,expired);
+                        console.log("↑token及expired")
                         document.cookie = `hexToken = ${token};expires=${new Date (expired)};`
                        vm.$router.push('/helloworld/products')//把url網址導回首頁
                     }

@@ -115,8 +115,8 @@ export default {
   data () {
     return {
       products:[],
-      tempProducts:{},
-      isNew:false,
+      tempProducts:{}, //openModal()
+      isNew:false, //預設false
     }
   },
   methods:{
@@ -131,28 +131,28 @@ export default {
       })
     },
     getProducts(){
-      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}admin/products/all`
+      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}admin/products/all`//已改成後台api
       const vm = this;
       this.$http.get(api).then((response)=>{
         console.log(response.data)
-        vm.products = response.data.products;
+        vm.products = response.data.products;//把api裡面的資料複製並代入data資料中的products陣列
       })
     },
     openModal(isNew,item){
-      if(isNew){
+      if(isNew){//isNew是true時(去看html 有true參數)
         this.tempProducts = {};
-        this.isNew = true;
-      }else{
-        this.tempProducts = Object.assign({}, item);
-        this.isNew = false;
+        this.isNew = true;//把data資料中的isNew改成true
+      }else{//isNew是false時 帶入現有的資料 打開modal做編輯
+        this.tempProducts = Object.assign({}, item); //es6語法,意思是建立一個空的物件{},然後把item的內容複製到空物件中
+        this.isNew = false;//把data資料中的isNew改成false
       }
-      $('#exampleModal').modal('show');
+      $('#exampleModal').modal('show');//BS4寫法,去官網看
     },
-    updateProduct(){
+    updateProduct(){//更新介面
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
       let httpMethod = 'post';
       const vm =this;
-      if(!vm.isNew){//flase非新建立資料(已存在資料),就用put更新
+      if(!vm.isNew){//flase非新建立的資料(已存在資料),就用put更新;反之用post新增
           api= `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProducts.id}`
           httpMethod = 'put';
        }
@@ -172,6 +172,7 @@ export default {
   created(){
     this.getProducts();
     console.log(this.tempProducts)
+    console.log("↑this.tempProducts")
   },
 }
 </script>
