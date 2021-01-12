@@ -44,14 +44,14 @@
           <div class="modal-body">
             <div class="row">
                 <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="image">Link</label>
-                    <input type="text" id="image" class="form-control" v-model="tempProducts.imageUrl">
-                  </div>
-                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="image">Link</label>
+                      <input type="text" id="image" class="form-control" v-model="tempProducts.imageUrl">
+                    </div>
+                    <div class="form-group">
                     <label for="customerfile">or</label>
                     <input type="file" id="customerfile" class="form-control">
-                  </div>
+                </div>
                 </div>
                 <div class="col-sm-8">
                   <div class="form-group" col-md-6>
@@ -94,10 +94,10 @@
                        <label for="is_enabled" class="form-check-label">是否啟用</label>
                     </div>
                   </div>
-                </div>
-                </div>
+               </div>
             </div>
           </div>
+          
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
             <button type="button" class="btn btn-primary" @click="updateProduct()">確認</button>
@@ -131,7 +131,7 @@ export default {
       })
     },
     getProducts(){
-      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}admin/products/all`//已改成後台api
+      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products/all`//已改成後台api
       const vm = this;
       this.$http.get(api).then((response)=>{
         console.log(response.data)
