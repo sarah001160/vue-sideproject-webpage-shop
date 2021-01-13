@@ -56,6 +56,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
- 
-
+ /*scope表示區域 只會在這張頁面裡套用樣式*/ 
 </style>

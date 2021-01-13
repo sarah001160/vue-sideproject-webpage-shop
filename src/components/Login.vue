@@ -22,7 +22,7 @@
             signin(){
                 const api =`${process.env.APIPATH}/admin/signin`;//api已更正 'https://vue-course-api.hexschool.io/admin/signin';
                 const vm = this;
-                this.$http.post(api, vm.user).then((response)=>{ //使用post完送用戶帳號密碼
+                this.$http.post(api, vm.user).then((response)=>{ //使用post傳送用戶帳號密碼
                     console.log(response.data)
                     if(response.data.success){//如果登入成功
                         const token = response.data.token;

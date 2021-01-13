@@ -49,9 +49,9 @@
                       <input type="text" id="image" class="form-control" v-model="tempProducts.imageUrl">
                     </div>
                     <div class="form-group">
-                    <label for="customerfile">or</label>
-                    <input type="file" id="customerfile" class="form-control">
-                </div>
+                      <label for="customerfile">or上傳圖片</label>
+                      <input type="file" id="customerfile" class="form-control" ref="files" @change="uploadFile">
+                    </div>
                 </div>
                 <div class="col-sm-8">
                   <div class="form-group" col-md-6>
@@ -167,6 +167,24 @@ export default {
           console.log('新增失敗');
         }
       })
+    },
+    uploadFile(){
+      console.log(this);
+      const uploadedFile = this.$refs.files.files[0];
+      const vm =this;
+      const formData = new FormData();
+      formData.append('file-to-upload',uploadedFile);
+      const url=`{process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
+      this.$http.post(url,formData,{ headers:{
+                      'Content-type':'multipart/form-data'
+                    }
+                }).then((response)=>{
+                    console.log(response.data)
+                    if(response.data.success){
+                        vm.tempProduct.imgUrl = response.data.imageUrl;
+                        console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
+                    }
+                    })
     },
   },
   created(){
