@@ -180,10 +180,10 @@ export default {
                     }
                 }).then((response)=>{
                     console.log(response.data)
-                    if(response.data.success){
-                        vm.tempProduct.imgUrl = response.data.imageUrl;
-                        console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
-                    }
+                    // if(response.data.success){
+                    //     vm.tempProduct.imgUrl = response.data.imageUrl;
+                    //     console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
+                    // }
                     })
     },
   },
