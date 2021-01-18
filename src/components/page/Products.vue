@@ -6,25 +6,30 @@
         </div>
     <table class="table mb-4 mt-4">
         <thead>
-          <tr>
+          <tr><!--標題列-->
               <th width="100">分類</th>
               <th width="100">產品名稱</th>
               <th width="120">原價</th>
               <th width="120">售價</th>
               <th width="80">是否啟用</th>
-              <th width="80">編輯</th>   
+              <th width="80">編輯</th> 
+              <th width="30">刪除</th>  
           </tr>
         </thead>
         <tbody>
             <tr v-for="(item) in products" :key="item.id">
-                <td>{{item.category}}</td>
-                <td>{{item.title}}</td>
-                <td class="text-right">{{item.origin_price}}</td>   
-                <td>{{item.price}}</td>
-                <td>暫時空白</td> 
+                <td>{{item.category}}</td><!--分類-->
+                <td>{{item.title}}</td><!--品名-->
+                <td class="text-right">{{item.origin_price}}</td>   <!--原價-->
+                <td>{{item.price}}</td> <!--售價-->
+                <td>暫時空白</td> <!--是否啟用-->
                 <td>
-                  <button class="btn btn-outline-primary btn-sm" data-toggle="modal"  @click="openModal(false, item)">編輯</button>
+                   <button class="btn btn-outline-primary btn-sm" data-toggle="modal"  @click="openModal(false, item)">編輯</button>
                 </td>
+                <td>
+                    <button class="btn btn-outline-danger
+                     btn-sm">刪除</button>  
+                </td>  
 
             </tr>
         </tbody>
@@ -52,7 +57,9 @@
                       <label for="customerfile">or上傳圖片</label>
                       <input type="file" id="customerfile" class="form-control" ref="files" @change="uploadFile">
                     </div>
-                </div>
+                     <img class="img-fluid" :src="tempProducts.imageUrl">
+                 </div>
+            
                 <div class="col-sm-8">
                   <div class="form-group" col-md-6>
                       <label for="title" class="txt-left">標題</label>
@@ -166,26 +173,29 @@ export default {
           vm.getProducts();
           console.log('新增失敗');
         }
-      })
+   
+   })
     },
     uploadFile(){
       console.log(this);
-      const uploadedFile = this.$refs.files.files[0];
+      const uploadedFile = this.$refs.files.files[0];//去console.log查看this的資料,即可看見$refs裡面的files裡面的files第0筆資料
       const vm =this;
-      const formData = new FormData();
-      formData.append('file-to-upload',uploadedFile);
-      const url=`{process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
+      const formData = new FormData(); //制式寫法,上網查new FormData()
+      formData.append('file-to-upload',uploadedFile); //新增formData的寫法
+      const url=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`; //上傳圖片用的api
       this.$http.post(url,formData,{ headers:{
                       'Content-type':'multipart/form-data'
                     }
                 }).then((response)=>{
                     console.log(response.data)
-                    // if(response.data.success){
-                    //     vm.tempProduct.imgUrl = response.data.imageUrl;
-                    //     console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
-                    // }
+                    if(response.data.success){
+                        //  vm.tempProduct.imageUrl = response.data.imageUrl;
+                        //  console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
+                         vm.$set(vm.tempProducts,'imageUrl',response.data.imageUrl)
+                     }
                     })
     },
+    //目前少一個刪除的功能,還沒學會(痛苦) 20210113
   },
   created(){
     this.getProducts();

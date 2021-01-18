@@ -1,16 +1,19 @@
 /*HelloWorld元件設定*/
+/*這裡是自行設計CSS樣式的檔案,或是位置擺放
+改顏色完畢後,記得跑npm run dev*/
 #app{
     height:100vh;
 }
 .helloWorld{
-    background:pink;
+    background:$success;/*_variable.scss裡面有可以使用的變數"$XXX" 方便管理顏色*/
     width:100%;
     min-height:100vh;
     box-sizing:border-box;
     a{
-        display:block;
+       display:block;
        text-align:right;
     }
+
     
   }
 
