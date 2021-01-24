@@ -21,7 +21,7 @@ export default new VueRouter({
                     name:'products',
                     path:'products',
                     component:Products,
-                    meta:{requiresAuth:true},
+                    meta:{requiresAuth:true},//必須登入以後才能看到products.vue
                 }
             ],
         },
