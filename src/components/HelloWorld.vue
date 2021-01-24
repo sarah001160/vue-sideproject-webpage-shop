@@ -27,10 +27,10 @@ export default {
     signout(){
       const api =`${process.env.APIPATH}/logout`;// 'https://vue-course-api.hexschool.io/admin/signin';
       const vm = this;
-      this.$http.post(api).then((response)=>{ //使用post完送用戶帳號密碼
+      this.$http.post(api).then((response)=>{ //使用post新增到api(傳送用戶帳號密碼到api)
         console.log(response.data)
-        if(response.data.success){//如果登入成功
-          vm.$router.push('/login')//就把url網址導回首頁
+        if(response.data.success){//如果登出成功
+          vm.$router.push('/login')//就把url網址導回登入頁面
         }
       })
     },
