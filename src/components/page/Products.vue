@@ -1,6 +1,8 @@
 <template>
     <div class="products">
-        <h2>Products內容</h2>
+        <loading :active.sync="isLoading">
+        </loading><!--全域的讀取效果-->
+        
         <div>
               <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @click="openModal(true)">建立新產品</button>
         </div>
@@ -53,6 +55,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="customerfile">or上傳圖片</label>
+                                  <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                                     <input type="file" id="customerfile" class="form-control" ref="files" @change="uploadFile">
                                 </div>
                                 <img class="img-fluid" :src="tempProducts.imageUrl">
@@ -143,6 +146,10 @@ export default {
       products:[],
       tempProducts:{}, //openModal()
       isNew:false, //預設false
+      isLoading:false,//預設false,先不出現loading
+      status:{
+          fileUploading:false,
+      },
     }
   },
   methods:{
@@ -159,8 +166,10 @@ export default {
     getProducts(){
       const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products/all`//已改成後台api
       const vm = this;
+      vm.isLoading=true;//啟用讀取效果loading
       this.$http.get(api).then((response)=>{
         console.log(response.data)
+        vm.isLoading=false;//關閉讀取效果loading
         vm.products = response.data.products;//把api裡面的資料複製並代入data資料中的products陣列
       })
     },
@@ -202,14 +211,19 @@ export default {
       const formData = new FormData(); //制式寫法,上網查new FormData()
       formData.append('file-to-upload',uploadedFile); //新增formData的寫法
       const url=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`; //上傳圖片用的api
+      //加入讀取中效果
+      vm.status.fileUploading=true;//讀取中效果出現
       this.$http.post(url,formData,{ headers:{'Content-type':'multipart/form-data'}
                 }).then((response)=>{
                     console.log(response.data)
+                    vm.status.fileUploading=false;//讀取中效果關閉
                     if(response.data.success){
                         //  vm.tempProduct.imageUrl = response.data.imageUrl;
                         //  console.log(vm.tempProduct)//只寫到這一行的話,去console.log()看,settwer跟getter並沒有綁定
                          vm.$set(vm.tempProducts,'imageUrl',response.data.imageUrl)
-                     }
+                     }//else{
+                        //  this.$bus.$emit('message:push','這裡是一段訊息','success')
+                     //}
                     })
     },
     openDeleteModal(isNew,item){//點選刪除按鈕時,出現的modal #deleteModal,"刪除"按鈕的語法位置是在<tr>的v-for迴圈內,所以可以取得item資料
@@ -242,8 +256,9 @@ export default {
   },
   created(){
     this.getProducts();
+    this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
     console.log(this.tempProducts)
-    console.log("↑this.tempProducts")
+    console.log("↑this.tempProducts")//查看this.tempProducts的值
   },
 }
 </script>

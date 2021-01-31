@@ -5,7 +5,7 @@
     height:100vh;
 }
 .helloWorld{
-    background:$success;/*_variable.scss裡面有可以使用的變數"$XXX" 方便管理顏色*/
+    background:pink;/*_variable.scss裡面有可以使用的變數"$XXX" 方便管理顏色*/
     width:100%;
     min-height:100vh;
     box-sizing:border-box;

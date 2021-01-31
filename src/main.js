@@ -4,12 +4,19 @@ import Vue from 'vue'
 import App from './App'
 import "bootstrap"
 import VueAxios from 'vue-axios'
-import axios from 'axios'
+import axios from 'axios'//vueaxios類似ajax功能
 import router from './router'
+import Loading from 'vue-loading-overlay'; //讀取效果
+import 'vue-loading-overlay/dist/vue-loading.css';//讀取效果
+import './bus'; //匯入event.bus錯誤訊息回饋
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 axios.defaults.withCredentials=true;
+
+Vue.component('Loading',Loading); //全域啟用Loading這個元件
+
+
 
 /* eslint-disable no-new */
 new Vue({

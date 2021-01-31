@@ -1,6 +1,7 @@
 <template>
   <div class="helloWorld pt-5">
     <a  href="#" class="text-right" @click="signout()">登出</a>
+    <Alert></Alert>
     <Navbar></Navbar>
     <router-view></router-view><!--products.vue-->
        
@@ -10,6 +11,7 @@
 <script>
 /*$ global */
 import Navbar from '@/components/Navbar'
+import Alert from './Alert'//匯入Alert元件(掛載在Vue原型)
 
 export default {
   name: 'HelloWorld',
@@ -22,6 +24,8 @@ export default {
   },
   components:{
     Navbar,
+    Alert,
+   
   },
   methods:{
     signout(){
