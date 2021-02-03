@@ -43,9 +43,16 @@
              li{
                 width:90%;;
                 height:50px;
-                background:white;
+                background:rgb(168, 199, 168);
                 margin-top:10px;
-               
+                border-radius:10px;
+                line-height:2.5;
+                font-weight:bold;
+                font-size:18px;
+                cursor:pointer;
+                @media(max-width:768px){//成功!可以寫在這邊
+                    background:red;
+                }
             }
         }
        

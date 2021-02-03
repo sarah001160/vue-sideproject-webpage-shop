@@ -25,7 +25,7 @@ export default{
     },
     methods:{
         updateMessage(message, status){
-            const timestamp= Math.floor(new Data()/1000);
+            const timestamp= Math.floor(new Date()/1000);
             this.messages.push({
                 message,
                 status,
@@ -50,7 +50,7 @@ export default{
     created(){
         const vm =this;
         vm.$bus.$on('messsage:push',(message,status='warning')=>{ //用$on註冊"messsage:push"
-            vm.updateMessgae(message,status);
+            vm.updateMessage(message,status);
         });
     },
 }

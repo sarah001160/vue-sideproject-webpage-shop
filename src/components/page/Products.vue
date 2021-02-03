@@ -150,6 +150,7 @@ export default {
       status:{
           fileUploading:false,
       },
+     
     }
   },
   methods:{
@@ -171,6 +172,8 @@ export default {
         console.log(response.data)
         vm.isLoading=false;//關閉讀取效果loading
         vm.products = response.data.products;//把api裡面的資料複製並代入data資料中的products陣列
+      
+       
       })
     },
     openModal(isNew,item){ 
@@ -187,7 +190,7 @@ export default {
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`; //建立api
       let httpMethod = 'post'; //新增api的方法是post
       const vm =this;
-      if(!vm.isNew){//若為"舊的資料(已存在資料)"",改api路徑,用put更新api
+      if(!vm.isNew){//若為"舊的資料(已存在資料)",改api路徑,用put更新api
           api= `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProducts.id}`
           httpMethod = 'put';
        }
@@ -256,9 +259,9 @@ export default {
   },
   created(){
     this.getProducts();
-    this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
     console.log(this.tempProducts)
     console.log("↑this.tempProducts")//查看this.tempProducts的值
+      this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
   },
 }
 </script>
