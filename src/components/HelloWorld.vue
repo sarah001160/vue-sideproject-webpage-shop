@@ -1,9 +1,9 @@
 <template>
   <div class="helloWorld pt-5">
     <a  href="#" class="text-right" @click="signout()">登出</a>
-    <Alert></Alert>
+    <Alert></Alert><!--錯誤訊息回饋-->
     <Navbar></Navbar>
-    <router-view></router-view><!--products.vue-->
+    <router-view></router-view><!--products.vue或是customerOrder.vue/去看index.js及navbar-->
        
   </div>
 </template>

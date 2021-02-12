@@ -44,6 +44,7 @@
     input,button{
         margin-top:20px;
         height:50px;
+        width:200px;
     }
     button{
         width:200px;

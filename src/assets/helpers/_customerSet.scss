@@ -23,33 +23,62 @@
         min-height:100vh;
         margin-left:210px;
         box-sizing:border-box;
+        @media(max-width:576px){
+            width:100%;
+            margin:0px auto;
+        }
     }
-
+.customerOrder{
+    max-width:89%;
+    min-height:100vh;
+    margin-left:200px;
+    box-sizing:border-box;
+}
 /*HelloWorld置入 Navbar.ve元件*/
     .navbar{
-        height:100vh;
-        width:200px;
+        height:100vh;//高度固定滿版
+        width:180px;//navbar寬度設定
+        box-sizing:border-box;
         position:fixed;
         top:0;
         left:0;
         display:flex;
         flex-direction:column;
         padding:0;
+        @media(max-width:576px){
+            width:50px;
+            height:50px; //手機板時,請不要出現ul,改成漢堡選單
+            cursor:pointer;
+            ul{
+                display:none;
+            }
+        }
         ul{
             width:100%;
             margin-top:80px;
             padding:0;
-            margin-left:10px;
+            display:flex;
+            flex-direction:column;
              li{
-                width:90%;;
+                width:90%;
                 height:50px;
                 background:rgb(168, 199, 168);
-                margin-top:10px;
-                border-radius:10px;
-                line-height:2.5;
+                margin:0 auto;//本身置中
+                text-align:center;//子元素水平置中
+                align-items:center;//子元素垂直置中
+                justify-content:center;
+                padding-top:10px;
                 font-weight:bold;
-                font-size:18px;
-                cursor:pointer;
+                color:red;
+                margin-top:10px;
+                router-link{
+                    color:black;///無法改變routerlink的顏色，為何????
+                }
+                a{
+                    width:100%;
+                    display:block;
+                    text-align:center;
+                }
                 @media(max-width:768px){//成功!可以寫在這邊
                     background:red;
                 }

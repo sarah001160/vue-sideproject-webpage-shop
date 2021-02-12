@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld';
 import Login from '@/components/Login';
 import CustomerOrder from '@/components/CustomerOrder';
 import Products from '@/components/page/Products';
+import customerOrder from '@/components/page/customerOrder';
+
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -22,6 +24,18 @@ export default new VueRouter({
                     path:'products',
                     component:Products,
                     meta:{requiresAuth:true},//必須登入以後才能看到products.vue
+                }
+            ],
+        },
+        {
+            name:'我也不知道這是什麼',
+            path:'/',
+            component:HelloWorld,
+            children:[
+                {
+                    name:'customerOrder',
+                    path:'customerOrder',
+                    component:customerOrder,
                 }
             ],
         },

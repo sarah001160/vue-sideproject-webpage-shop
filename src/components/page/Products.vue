@@ -35,6 +35,24 @@
                 </tr>
             </tbody>
         </table>
+        <!--pagination-->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" :class="{'disabled':!pagination.has_pre}">
+              <a class="page-link" href="#" @click.prevent="getProducts(pagination.current_page-1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" v-for="page in pagination.total_pages" :key="page" :class="{'active':pagination.current_page===page}"><a class="page-link" @click.prevent="getProducts(page)" href="#">{{page}}</a></li>
+            <li class="page-item" :class="{'disabled':!pagination.has_next}">
+              <a class="page-link" href="#"  @click.prevent="getProducts(pagination.current_page+1)"aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -144,12 +162,13 @@ export default {
   data () {
     return {
       products:[],
-      tempProducts:{}, //openModal()
+      tempProducts:{}, //openModal()裡面的input連接
       isNew:false, //預設false
       isLoading:false,//預設false,先不出現loading
-      status:{
-          fileUploading:false,
+      status:{//用來控制轉圈圈的讀取效果,出現在上傳圖片旁邊
+          fileUploading:false,//預設false是關閉讀取效果
       },
+      pagination:{},//分頁頁碼
      
     }
   },
@@ -164,15 +183,16 @@ export default {
         }
       })
     },
-    getProducts(){
-      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products/all`//已改成後台api
+    getProducts(page=1){ //參數是用來顯示pagination
+      //const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products/all`//已改成後台api(第一版)
+      const api=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products?page=${page}`//第二版
       const vm = this;
       vm.isLoading=true;//啟用讀取效果loading
       this.$http.get(api).then((response)=>{
         console.log(response.data)
         vm.isLoading=false;//關閉讀取效果loading
         vm.products = response.data.products;//把api裡面的資料複製並代入data資料中的products陣列
-      
+        vm.pagination = response.data.pagination;//
        
       })
     },
@@ -194,7 +214,7 @@ export default {
           api= `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProducts.id}`
           httpMethod = 'put';
        }
-      this.$http[httpMethod](api,{data:vm.tempProducts}).then((response)=>{
+      this.$http[httpMethod](api,{data:vm.tempProducts}).then((response)=>{//把tempProducts存入api
         console.log(response.data)
         if (response.data.success) {//如果response.data是成功,就關閉#exampleModal並且執行getProducts抓取最新的api資料
           $('#exampleModal').modal('hide');
@@ -261,7 +281,8 @@ export default {
     this.getProducts();
     console.log(this.tempProducts)
     console.log("↑this.tempProducts")//查看this.tempProducts的值
-      this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
+    this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
+    
   },
 }
 </script>
