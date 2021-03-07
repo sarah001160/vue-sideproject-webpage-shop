@@ -22,8 +22,8 @@
                 <tr v-for="(item) in products" :key="item.id">
                     <td>{{item.category}}</td><!--分類-->
                     <td>{{item.title}}</td><!--品名-->
-                    <td class="text-right">{{item.origin_price}}</td>   <!--原價-->
-                    <td>{{item.price}}</td> <!--售價-->
+                    <td class="text-right">{{item.origin_price|currency}}</td>   <!--原價-->
+                    <td>{{item.price| currency}}</td> <!--售價-->
                     <td>暫時空白</td> <!--是否啟用-->
                     <td>
                       <button class="btn btn-outline-primary btn-sm" data-toggle="modal"  @click="openModal(false, item)">編輯</button><!--此按鈕正在v-for迴圈之內-->
@@ -278,10 +278,11 @@ export default {
      },
   },
   created(){
-    this.getProducts();
+    this.getProducts();//自動取得商品api 所以畫面會是最新的
     console.log(this.tempProducts)
     console.log("↑this.tempProducts")//查看this.tempProducts的值
-    this.$bus.$emit('messsage:push','這裡是一段訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
+    this.$bus.$emit('messsage:push','這裡是自動出現訊息','success');//透過這個方法觸發外層的alert,第一個有三個s 第二個是顯示文字 第三個是狀態
+    //設定寫在product 則訊息只會出現在product.vue頁面
     
   },
 }
@@ -291,3 +292,6 @@ export default {
  
    
  </style>
+
+
+ <!--打開終端機方法 Ctrl+ ~符號-->

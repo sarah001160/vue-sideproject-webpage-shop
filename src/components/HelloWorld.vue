@@ -10,7 +10,7 @@
 
 <script>
 /*$ global */
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/Navbar' //匯入Navbar元件
 import Alert from './Alert'//匯入Alert元件(掛載在Vue原型)
 
 export default {
@@ -49,7 +49,7 @@ export default {
     },
   },
   created(){
-    this.getProducts();
+    this.getProducts(); //取得商品
     console.log(this.tempProducts)
     const myCookie =document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
     console.log('myCookie', myCookie)

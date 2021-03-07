@@ -15,7 +15,7 @@
 export default{
     name:'Navbar',
     data(){
-        return{
+        return{ //這個示範是手動的訊息 並不會自動消失
             messages:[{ //message是一個陣列
                 message:'訊息內容',
                 status:'danger',
