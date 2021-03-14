@@ -16,7 +16,7 @@ import { //表單驗證用
   extend,
   localize,
   configure} from 'vee-validate';
-import TW from 'vee-validate/dist/local/zh_TW.json'
+import TW from 'vee-validate/dist/locale/zh_TW.json'
 import * as rules from 'vee-validate/dist/rules' //表單驗證用
 
 
@@ -33,7 +33,7 @@ Vue.filter('currency',currencyFilter)//啟用filter 第一個輸入檔案名稱 
 Object.keys(rules).forEach((rule)=>{ //表單驗證用
     extend(rule, rules[rule]);
 });
-localize('zh_TW',TW);
+localize('zh_TW',TW);//表單驗證用
 Vue.component('ValidationObserver', ValidationObserver);//表單驗證用
 Vue.component('ValidationProvider', ValidationProvider);  //表單驗證用
 configure({//表單驗證用

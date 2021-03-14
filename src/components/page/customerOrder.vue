@@ -92,48 +92,64 @@
     
     <!--建立表單-->
     <div class="my-5 row justify-content-center">
-      <form class="col-md-6">
-          <!--1-->
-          <div class="form-group">
-            <label for="useremail">Email</label>
-            <input type="email" class="form-control" name="email" id="useremail"
-              placeholder="請輸入 Email" v-validate="'required|email'"
-              :class="{'is-invalid':errors.has('email')}" >
-            <span class="text-danger" v-if="errors.has('email')">
-              {{errors.first('email')}}          
-            </span>
-          </div>
-          <!--2-->
-          <!-- <div class="form-group">
-            <label for="username">收件人姓名</label>
-            <input type="text" class="form-control" name="name" id="username"
-            placeholder="輸入姓名">
-            <span class="text-danger">姓名必須輸入</span>
-          </div>
-          <!--3-->
-          <!-- <div class="form-group">
-            <label for="usertel">收件人電話</label>
-            <input type="tel" class="form-control" id="usertel"
-              placeholder="請輸入電話">
-          </div> -->
-          <!--4-->
-          <!-- <div class="form-group">
-            <label for="useraddress">收件人地址</label>
-            <input type="text" class="form-control" name="address"
-              id="useraddress" placeholder="請輸入地址">
-            <span class="text-danger">地址欄位不得留空</span>
-          </div> -->
-          <!--5-->
-          <!-- <div class="form-group">
-            <label for="useraddress">留言</label>
-            <textarea name="" id="" class="form-control" cols="30" rows="10">
-              
-            </textarea>
-          </div>
-          <div class="text-right">
-              <button class="btn btn-danger">送出訂單</button>
-          </div> --> 
-      </form>
+      <validation-observer v-slot="{invalid}"  class="col-md-6">
+           <form>
+            <!--1-->
+              <div class="form-group">
+                <label for="useremail">Email</label>
+                <input type="email" class="form-control" name="email" id="useremail"
+                  placeholder="請輸入 Email" v-validate="'required|email'"
+                  :class="{'is-invalid':errors.has('email')}" 
+                  v-model="form.user.email">
+                <span class="text-danger" v-if="errors.has('email')">
+                  {{errors.first('email')}}          
+                </span>
+              </div>
+              <validation-provider class="form-group" rules="required|email" v-slot="{errors,classes }">
+                <!--這是一個元件，會導入驗證規則ruels那一段required表示必填，垂直線條右邊再加入其他規則，
+                以及slot可以將外部元件的data傳入的slot裡面-->
+                  <!-- 輸入框 -->
+                  <label for="email">Email</label>
+                  <input id="email" type="email" name="email"
+                  v-model="form.user.email"
+                    class="form-control" :class="classes"><!--這個classes就是main.js裡面configure的classes--->
+                <!-- 錯誤訊息 -->
+                  <span class="invalid-feedback">{‌{ errors[0] }}</span>
+              </validation-provider>
+
+            <!--2-->
+            <!-- <div class="form-group">
+              <label for="username">收件人姓名</label>
+              <input type="text" class="form-control" name="name" id="username"
+              placeholder="輸入姓名">
+              <span class="text-danger">姓名必須輸入</span>
+            </div>
+            <!--3-->
+            <!-- <div class="form-group">
+              <label for="usertel">收件人電話</label>
+              <input type="tel" class="form-control" id="usertel"
+                placeholder="請輸入電話">
+            </div> -->
+            <!--4-->
+            <!-- <div class="form-group">
+              <label for="useraddress">收件人地址</label>
+              <input type="text" class="form-control" name="address"
+                id="useraddress" placeholder="請輸入地址">
+              <span class="text-danger">地址欄位不得留空</span>
+            </div> -->
+            <!--5-->
+            <!-- <div class="form-group">
+              <label for="useraddress">留言</label>
+              <textarea name="" id="" class="form-control" cols="30" rows="10">
+                
+              </textarea>
+            </div>---->
+            <div class="text-right">
+                <button class="btn btn-danger" :disabled="invalid">送出訂單</button>
+            </div> 
+          </form>
+      </validation-observer>
+       
     </div>
 
     
