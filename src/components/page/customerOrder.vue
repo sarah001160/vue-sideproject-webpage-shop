@@ -93,8 +93,8 @@
     <!--建立表單-->
     <div class="my-5 row justify-content-center">
       <validation-observer v-slot="{invalid}"  class="col-md-6">
-           <form>
-            <!--1-->
+           <form @submit.prevent="createOrder">
+            <!-- 1
               <div class="form-group">
                 <label for="useremail">Email</label>
                 <input type="email" class="form-control" name="email" id="useremail"
@@ -104,19 +104,21 @@
                 <span class="text-danger" v-if="errors.has('email')">
                   {{errors.first('email')}}          
                 </span>
-              </div>
-              <validation-provider class="form-group" rules="required|email" v-slot="{errors,classes }">
-                <!--這是一個元件，會導入驗證規則ruels那一段required表示必填，垂直線條右邊再加入其他規則，
-                以及slot可以將外部元件的data傳入的slot裡面-->
-                  <!-- 輸入框 -->
-                  <label for="email">Email</label>
-                  <input id="email" type="email" name="email"
-                  v-model="form.user.email"
-                    class="form-control" :class="classes"><!--這個classes就是main.js裡面configure的classes--->
-                <!-- 錯誤訊息 -->
-                  <span class="invalid-feedback">{‌{ errors[0] }}</span>
-              </validation-provider>
+              </div> -->
 
+              <validation-provider class="form-group" rules="required|email" v-slot="{errors,classes }">
+                    <!--這是一個元件，會導入驗證規則ruels那一段required表示必填，垂直線條右邊再加入其他規則，
+                    以及slot可以將外部元件的data傳入的slot裡面-->
+                      <!-- 輸入框 -->
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      <input id="email" type="email" name="email" v-model="form.user.email"
+                           class="form-control" :class="classes"><!--這個classes就是main.js裡面configure的classes--->
+                      <!-- 錯誤訊息 -->
+                      <span class="invalid-feedback">{‌{ errors[0] }}</span>
+                  </div>
+              </validation-provider>
+             
             <!--2-->
             <!-- <div class="form-group">
               <label for="username">收件人姓名</label>
