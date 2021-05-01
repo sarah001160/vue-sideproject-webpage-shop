@@ -6,7 +6,7 @@ import Login from '@/components/Login';
 import CustomerOrder from '@/components/CustomerOrder';
 import Products from '@/components/page/Products';
 import customerOrder from '@/components/page/customerOrder';
-
+import CustomerCheckout from '@/components/page/CustomerCheckout';
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -25,7 +25,12 @@ export default new VueRouter({
                     path:'products',
                     component:Products,
                     meta:{requiresAuth:true},//meta:{requiresAuth:true}放在這邊表示必須登入以後才能看到products.vue
-                }
+                },
+                {
+                    name:'cutomercheckout',//checkout頁面
+                    path:'customer_checkout/:orderId',
+                    component:CustomerCheckout,
+                },
             ],
         },
         {

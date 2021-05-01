@@ -93,7 +93,7 @@
     <!--建立表單-->
     <div class="my-5 row justify-content-center">
       <validation-observer v-slot="{invalid}"  class="col-md-6">
-           <form @submit.prevent="createOrder">
+          <form @submit.prevent="createOrder">
             <!-- 1
               <div class="form-group">
                 <label for="useremail">Email</label>
@@ -105,50 +105,24 @@
                   {{errors.first('email')}}          
                 </span>
               </div> -->
-
-              <validation-provider class="form-group" rules="required|email" v-slot="{errors,classes }">
+              <validation-provider class="form-group" rules="required|email" v-slot="{errors,classes}">
                     <!--這是一個元件，會導入驗證規則ruels那一段required表示必填，垂直線條右邊再加入其他規則，
                     以及slot可以將外部元件的data傳入的slot裡面-->
                       <!-- 輸入框 -->
-                  <div class="form-group">
+                  <div class="form-group">  
                       <label for="email">Email</label>
                       <input id="email" type="email" name="email" v-model="form.user.email"
                            class="form-control" :class="classes"><!--這個classes就是main.js裡面configure的classes--->
                       <!-- 錯誤訊息 -->
-                      <span class="invalid-feedback">{‌{ errors[0] }}</span>
+                      <span class="invalid-feedback">‌{{errors[0]}}</span>
+                      <span v-if="passed" class="valid-feedback">Email 正確</span>
                   </div>
               </validation-provider>
              
-            <!--2-->
-            <!-- <div class="form-group">
-              <label for="username">收件人姓名</label>
-              <input type="text" class="form-control" name="name" id="username"
-              placeholder="輸入姓名">
-              <span class="text-danger">姓名必須輸入</span>
-            </div>
-            <!--3-->
-            <!-- <div class="form-group">
-              <label for="usertel">收件人電話</label>
-              <input type="tel" class="form-control" id="usertel"
-                placeholder="請輸入電話">
-            </div> -->
-            <!--4-->
-            <!-- <div class="form-group">
-              <label for="useraddress">收件人地址</label>
-              <input type="text" class="form-control" name="address"
-                id="useraddress" placeholder="請輸入地址">
-              <span class="text-danger">地址欄位不得留空</span>
-            </div> -->
-            <!--5-->
-            <!-- <div class="form-group">
-              <label for="useraddress">留言</label>
-              <textarea name="" id="" class="form-control" cols="30" rows="10">
-                
-              </textarea>
-            </div>---->
-            <div class="text-right">
-                <button class="btn btn-danger" :disabled="invalid">送出訂單</button>
-            </div> 
+        
+              <div class="text-right">
+                 <button class="btn btn-danger" :disabled="invalid">送出訂單</button>
+              </div> 
           </form>
       </validation-observer>
        
@@ -179,6 +153,11 @@ export default {
       },
       cart:{ },
       coupon_code:'',
+       form: {
+          user: {
+              email:'',
+          }
+      },
     };
   },
   methods: {
@@ -253,6 +232,24 @@ export default {
         vm.isLoading=false;
       })
 
+    },
+    createOrder(){//送出訂單 form html
+      const vm = this;
+      const url=`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      const order = vm.form;
+      this.$validator.validate().then((result)=>{
+        console.log(result);
+        if(result){
+          this.$http.post(url,{data:order}).then(
+            (response)=>{
+              console.log('訂單已建立',response);
+              if(response.data.success){vm.$router.push(`/customer_checkout/${response.data.orderId}`);}
+              vm.isLoading=false;
+            })
+        }else{
+          console.log('欄位不完整')
+        }
+      })
     },
   },
   created() {

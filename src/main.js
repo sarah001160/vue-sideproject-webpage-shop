@@ -16,8 +16,10 @@ import { //表單驗證用
   extend,
   localize,
   configure} from 'vee-validate';
-import TW from 'vee-validate/dist/locale/zh_TW.json'
+import TW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules' //表單驗證用
+
+
 
 
 
